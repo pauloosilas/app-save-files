@@ -1,25 +1,23 @@
-const express = require('express')
-const fs = require('fs')
+const express = require('express');
+const routes = require('./routes');
 
-const app = express()
+const app = express();
+const port = 3000;
 
-const data = "Paulo sbbandeira"
-const fileTxt = "arquivo.txt"
+// Enable CORS
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
-var teste
+app.use('/', routes);
+app.use(express.static('public'));
 
-fs.readFile('arquivo.txt','utf-8', (err, data) => {
-    if (err) throw err;
-    teste = data
-    console.log(teste);
-  });
-/*
-fs.writeFile(fileTxt, data, (err) => {
-    if(err) throw err;
-    console.log('arquivo criado')
-})
-*/
+const startServer = () => {
+    const server = app.listen(process.env.PORT || port, function () {
+      console.log(`Server running on port ${server.address().port}`);
+    });
+};
 
-app.get('/', (req, res) => res.send(teste))
-
-app.listen(process.env.PORT || 3000)
+module.exports = startServer;
