@@ -8,6 +8,7 @@
         <button type="submit" name="upload">Upload</button>
         <br />
         <img id="avatar">
+        <img src="https://app-test-forme.herokuapp.com/uploads/fc96981a6ec073a64254e8f44ff6a4eb">
     </form>
 
     <script>
@@ -15,11 +16,12 @@
             event.preventDefault();
             let formData = new FormData();
             formData.append('avatar', event.target[0].files[0]);
-            fetch('http://localhost:3000/api/avatar', { method: 'post', body: formData })
+            console.log(formData)
+            fetch('https://app-test-forme.herokuapp.com/api/avatar', { method: 'post', body: formData })
                 .then(res => res.json())
                 .then(res => {
                     console.log(avatar.src)
-                    avatar.src = `http://localhost:3000${res.payload.url}`;
+                    avatar.src = `https://app-test-forme.herokuapp.com/${res.payload.url}`;
                     console.log(res.payload)
 
                 })
