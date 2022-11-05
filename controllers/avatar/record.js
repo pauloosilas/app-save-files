@@ -1,5 +1,5 @@
 const multer = require('multer');
-const parser = multer({ dest: './uploads/' })
+const parser = multer({ dest: 'imagens/' })
 console.log("teste rec")
 module.exports = async (req, res) => {
     
