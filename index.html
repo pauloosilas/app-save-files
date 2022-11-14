@@ -1,31 +1,50 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+    <title>Upload</title>
+</head>
+
 <body>
-    <form id="form" enctype="multipart/form-data">
-        <input type="file" name="avatar" />
-        <br />
-        <button type="submit" name="upload">Upload</button>
-        <br />
 
-        <img id="avatar" src="https://app-test-forme.herokuapp.com/uploads/86e4a10e9c94626a515598a17955d2e7">
+    <h1>Upload!</h1>
+    <img src="https://i.imgur.com/CLLZgzZ.png" id="img">
+    <form class="form">
+        <input id="file" name="file" type="file" required>
+        <button type="submit">Submit</button>
     </form>
+    <img src="">
+    <p id="url"></p>
 
-    <script>
-        form.addEventListener('submit', event => {
-            event.preventDefault();
-            let formData = new FormData();
-            formData.append('avatar', event.target[0].files[0]);
-            console.log(formData)
-            fetch('https://app-test-forme.herokuapp.com/api/avatar', { method: 'post', body: formData })
-                .then(res => res.json())
-                .then(res => {
-                    console.log(avatar.src)
-                    avatar.src = `https://app-test-forme.herokuapp.com/${res.payload.url}`;
-                    console.log(res.payload)
+    <div id="gallery">
+        <!-- images -->
+    </div>
 
-                })
-                .catch(console.log);
-        });
+    <script type="text/javascript">
+
+        const CLIENT = '0aabe048fb4dea2'
+
+        const file = document.getElementById("file")
+        const img = document.getElementById("img")
+
+        file.addEventListener("change", ev => {
+            const formData = new FormData()
+            formData.append("image", ev.target.files[0])
+            fetch("https://api.imgur.com/3/image", {
+                method: "POST",
+                headers: {
+                    Authorization: `Client-ID ${CLIENT}`
+                },
+                body: formData
+            }).then(data => data.json()).then(data => {
+                img.src = data.data.link
+                url.innerHTML = data.data.link
+            })
+        })
     </script>
+
+
+
 </body>
+
+</html>
